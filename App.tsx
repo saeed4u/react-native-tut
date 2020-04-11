@@ -1,13 +1,29 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Header from "./components/Header";
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
 import GameOverScreen from "./screens/GameOverScreen";
+import { AppLoading } from "expo";
+import * as Font from "expo-font";
 
-export default function App() {
+const fetchFont = () => {
+  return Font.loadAsync({
+    "open-sans": require("./assets/font/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/font/OpenSans-Bold.ttf"),
+  });
+};
+
+const App = () => {
   const [selectedNumber, setSelectedNumber] = useState();
   const [numberOfRounds, setNumberOfRounds] = useState(0);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  if (!dataLoaded) {
+    return (
+      <AppLoading startAsync={fetchFont} onFinish={() => setDataLoaded(true)} />
+    );
+  }
 
   const gameOverHandler = (numberOfRounds: number) => {
     setNumberOfRounds(numberOfRounds);
@@ -43,10 +59,12 @@ export default function App() {
       {content}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
+
+export default App;
