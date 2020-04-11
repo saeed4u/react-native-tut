@@ -23,16 +23,16 @@ const GameScreen = (props: any) => {
     generateRandomBetween(1, 100, props.userChoice)
   );
 
-  const [rounds, numberOfRounds] = useState(0);
+  const [rounds, setNumberOfRounds] = useState(0);
 
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
 
   useEffect(() => {
-    if(currentGuess === props.userChoice){
-        props.onGameOver()
+    if (currentGuess === props.userChoice) {
+      props.onGameOver(rounds);
     }
-  })
+  }, [currentGuess, props.userChoice, props.onGameOver]);
 
   const nextGuessHandler = (direction: string) => {
     const isInValidHint =
@@ -58,6 +58,7 @@ const GameScreen = (props: any) => {
       currentGuess
     );
     setCurrenGuess(nextGuess);
+    setNumberOfRounds((curRound) => curRound + 1);
   };
 
   return (
