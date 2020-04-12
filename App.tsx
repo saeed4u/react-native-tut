@@ -55,7 +55,7 @@ const App = () => {
   }
   return (
     <View style={styles.container}>
-      <Header title="Header" />
+      <Header title="Guess a Number" />
       {content}
     </View>
   );
